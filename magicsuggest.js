@@ -1395,6 +1395,22 @@
                     selected,
                     obj = {};
 
+                // fix physical keyboard bug on iPad that returns keyCode 0 on keyup
+                if (e.keyCode === 0 && e.key) {
+                    var map = {
+                        "Backspace": KEYCODES.BACKSPACE,
+                        "Tab": KEYCODES.TAB,
+                        "Enter": KEYCODES.ENTER,
+                        "Control": KEYCODES.CTRL,
+                        "Escape": KEYCODES.ESC,
+                        " ": KEYCODES.SPACE,
+                        "ArrowUp": KEYCODES.UPARROW,
+                        "ArrowDown": KEYCODES.DOWNARROW,
+                        ",": KEYCODES.COMMA
+                    };
+                    e.keyCode = e.which = map[e.key];
+                }
+
                 $(ms).trigger('keyup', [ms, e]);
 
                 clearTimeout(_timer);
